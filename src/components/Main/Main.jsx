@@ -1,6 +1,7 @@
 import React from 'react'
 import './Main.css';
 import { assets } from '../../assets/assets';
+import ContextProvider from '../../context/Context';
 
 function Main () {
   return (
@@ -15,7 +16,7 @@ function Main () {
                 <p>How can I help you today?</p>
             </div>
             <div className="cards">
-                <div className="card">
+                <div className="card" onClick={() => ContextProvider.onSent("what is react?")}>
                     <p>Suggest beautiful places to see on an upcoming road trip</p>
                     <img src={assets.compass_icon} alt=''/>
                 </div>
