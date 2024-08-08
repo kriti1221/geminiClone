@@ -17,7 +17,9 @@ function Main () {
         showResult,
         setShowResult,
         result,
-        setResult} = useContext(Context);
+        setResult,
+        repeated,
+        setRepeated} = useContext(Context);
 
   return (
     
@@ -35,9 +37,8 @@ function Main () {
                 <p>How can I help you today?</p>
             </div>
             <div className="cards">
-                <div className="card" onClick={() => {setInput("Suggest beautiful places to see on an upcoming road trip");
-                    onSent();
-                }
+                <div className="card" onClick={() =>
+                    onSent("Suggest beautiful places to see on an upcoming road trip")
                 }>
                     <p>Suggest beautiful places to see on an upcoming road trip</p>
                     <img src={assets.compass_icon} alt=''/>
@@ -84,8 +85,10 @@ function Main () {
                     <div>
                         <img src={assets.gallery_icon} alt="" />
                         <img src={assets.mic_icon} alt="" />
-                        <img src={assets.send_icon} alt="" onClick = { () => {onSent();
-                             }}/>
+                        {input?<img src={assets.send_icon} alt="" onClick = { () => {
+                            setRepeated(false);
+                            onSent(input);
+                             }}/>:null}
                     </div>
                 </div>
                 <p className= "bottom-info">

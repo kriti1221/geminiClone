@@ -10,16 +10,22 @@ function ContextProvider (props) {
     const [recentPrompt , setRecentPrompt] = useState("");
     const [prevPrompts  , setPrevPrompts] = useState([]);
     const [showResult , setShowResult] = useState(false);
-    const [result , setResult] = useState("");  
+    const [result , setResult] = useState(""); 
+    const [repeated, setRepeated] = useState(false);
 
-    async function onSent(){
+    async function onSent(prompt){
         setLoading(true);
-        setRecentPrompt(input);
-        setPrevPrompts([...prevPrompts,input]);
+        setRecentPrompt(prompt);
+        setInput(prompt);
+        if(!repeated){
+        setPrevPrompts([...prevPrompts,prompt]);
+        }
+        setRepeated(false);
         setShowResult(true);
         setResult("");
-        const response = await run(input);
-        setResult(response);
+        const response = await run(prompt);
+        let newResponse = response.split("**").join(<br/>)
+        setResult(newResponse);
         setLoading(false);
         setInput("");
     }
@@ -37,7 +43,9 @@ function ContextProvider (props) {
         showResult,
         setShowResult,
         result,
-        setResult
+        setResult,
+        repeated,
+        setRepeated
     }
 
     return (
