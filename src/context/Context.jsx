@@ -3,7 +3,7 @@ import run from "../config/gemini";
 
 export const Context = createContext();
 
-function ContextProvider (props){
+function ContextProvider (props) {
 
     const [input , setInput] = useState("");
     const [loading , setLoading] = useState(false);
@@ -12,8 +12,16 @@ function ContextProvider (props){
     const [showResult , setShowResult] = useState(false);
     const [result , setResult] = useState("");  
 
-    async function onSent(prompt){
-        await run(prompt);
+    async function onSent(){
+        setLoading(true);
+        setRecentPrompt(input);
+        setPrevPrompts([...prevPrompts,input]);
+        setShowResult(true);
+        setResult("");
+        const response = await run(input);
+        setResult(response);
+        setLoading(false);
+        setInput("");
     }
 
     const contextValue = {
